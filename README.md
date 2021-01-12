@@ -44,3 +44,44 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+1. 快速开发页面
+
+2. 技术栈： react + typescript + rxjs + scss
+
+3. 实现功能：
+
+- 函数式编程
+- 路由层面懒加载
+- 权限控制（菜单和按钮）
+- table 组件
+- 提供 rxjs 全局状态和局部 context 状态管理
+- 内置主题（黑白）
+
+### 项目规划
+
+技术栈： react + admin + antd + rxjs
+
+功能点：
+
+1. 权限认证
+2. 多级菜单
+3. 复合 table
+
+推广：
+
+1. github + gitee 开源
+2. 知乎 + 博客园 + 掘金 发技术分享
+
+目的：
+
+1. 公众号引流
+2. 微信好友运营
+
+随记：
+
+1. 二级菜单（二级嵌套菜单）+ 多层级路由
+2. 路由懒加载
+3. 尽可能减少 dom 中 if 的使用（封装）
+4. hooks
+5. 实现功能函数相分离的开发模式
