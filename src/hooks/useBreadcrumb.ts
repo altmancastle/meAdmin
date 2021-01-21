@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useMemo } from "react";
-import { PrivateRoute } from "../config/router.config";
+import { MeRoute } from "../config/router.config";
 
-export const useBreadcrumb = (route: PrivateRoute[]) => {
+export const useBreadcrumb = (route: MeRoute[]) => {
   const { pathname } = useLocation();
 
   const breadcrumb = pathname.split("/").filter((item: string) => item !== "");

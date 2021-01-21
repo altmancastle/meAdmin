@@ -3,7 +3,6 @@ import { map, catchError, retry, tap } from "rxjs/operators";
 import { ajax, AjaxError } from "rxjs/ajax";
 import config from "../config";
 import { logout } from "../store/login";
-import { message } from "antd";
 import { ITObject } from "./util";
 
 export function getToken() {
@@ -13,7 +12,7 @@ export function getToken() {
 
 const { baseURL } = config;
 
-export interface ResponseData {
+export interface MeResponse {
   success?: boolean;
   code?: string;
   message?: string;
@@ -37,7 +36,7 @@ const errorRequest = (error: AjaxError) => {
       logout();
     }
     if (error.status !== 200) {
-      message.error("服务器错误，请联系管理员！");
+      console.error("服务器错误，请联系管理员！");
     }
   });
 };
@@ -87,18 +86,10 @@ const request = (config: Config) => {
   return ajax(congifAjax).pipe(
     tap((ajaxResponse) => {
       if (ajaxResponse.status !== 200) {
-        message.error("服务器错误，请联系管理员！");
-        return;
+        console.error("服务器错误，请联系管理员！");
       }
     }),
-    map(({ response }) => {
-      if (response.success === undefined || response.success) {
-        return response;
-      } else {
-        message.error(response.message);
-        return {};
-      }
-    }),
+    map(({ response }) => response),
     retry(1),
     catchError((error) => {
       return errorRequest(error);

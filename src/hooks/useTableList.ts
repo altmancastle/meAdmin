@@ -1,13 +1,12 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { Form } from "antd";
 import { defaultPagination, AntdPagination } from "../config";
 import { usePagination } from "./usePagination";
 import { deleteObjectItemIfUndefined, ITObject } from "../utils/util";
 
 export function useTableList<T>(observerCallback: Function) {
-  const [form] = Form.useForm();
-
-  const [defaultValue, setDefaultValue] = useState({});
+  const [isRefresh, setIsRefresh] = useState<boolean>(false);
+  const [defaultParams, setDefaultParams] = useState<ITObject>();
+  const [initParams, setInitParams] = useState<ITObject>();
   const [loading, setLoading] = useState<boolean>(false);
   const [list, setList] = useState<T[]>([]);
   const { query, onChangePagination } = usePagination();
@@ -16,8 +15,10 @@ export function useTableList<T>(observerCallback: Function) {
   );
 
   useEffect(() => {
+    if (isRefresh) {
+    } // nothing
     setLoading(true);
-    const params = { ...defaultValue, ...query };
+    const params = { ...defaultParams, ...query, ...initParams };
     const subscriptions = observerCallback(params).subscribe(
       (response: any) => {
         const {
@@ -31,32 +32,40 @@ export function useTableList<T>(observerCallback: Function) {
     return () => {
       subscriptions.unsubscribe();
     };
-  }, [defaultValue, observerCallback, query]);
+  }, [defaultParams, observerCallback, query, isRefresh]);
+
+  const setParams = (params: ITObject) => {
+    setInitParams({ ...params });
+  };
+
+  const refresh = () => {
+    setIsRefresh(!isRefresh);
+  };
 
   const onFinish = useCallback((values: ITObject) => {
-    setDefaultValue(deleteObjectItemIfUndefined(values));
+    setDefaultParams(deleteObjectItemIfUndefined(values));
   }, []);
 
   const handleReset = useCallback(() => {
-    form.resetFields();
-    setDefaultValue({});
-  }, [form]);
+    setDefaultParams(undefined);
+  }, []);
 
   return useMemo(() => {
     return {
-      form,
       loading,
       list,
-      defaultValue,
+      defaultParams,
       showPagination,
       onChangePagination,
       onFinish,
       handleReset,
-      setDefaultValue,
+      setParams,
+      refresh,
     };
   }, [
-    defaultValue,
-    form,
+    refresh,
+    setParams,
+    defaultParams,
     handleReset,
     list,
     loading,

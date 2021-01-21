@@ -1,14 +1,12 @@
 import React, { useCallback } from "react";
-import { Table, Pagination } from "antd";
 import { AntdPagination, defaultQuery } from "../config";
-import { ColumnProps } from "antd/lib/table";
 
 interface StandardTableProps {
   pageKey?: "pageIndex" | "pageNum";
   rowKey: string;
   loading: boolean;
   dataSource: Array<any>;
-  columns: Array<ColumnProps<any>>;
+  columns: Array<any>;
   showPagination: AntdPagination;
   onChange: Function;
 }
@@ -36,24 +34,7 @@ const StandardTable = (props: StandardTableProps) => {
     justifyContent: "flex-end",
   };
 
-  return (
-    <>
-      <Table {...rest} pagination={false} />
-      {!!showPagination.total && (
-        <Pagination
-          style={style}
-          showSizeChanger
-          onChange={(page: any, pageSize: any) => {
-            onChangePagination(page, pageSize);
-          }}
-          onShowSizeChange={(page: any, pageSize: any) => {
-            onChangeSizePagination(page, pageSize);
-          }}
-          {...showPagination}
-        />
-      )}
-    </>
-  );
+  return <></>;
 };
 
 export default StandardTable;

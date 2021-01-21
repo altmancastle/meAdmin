@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-export interface PrivateRoute {
+export interface MeRoute {
   key: string;
   path?: string;
   title?: string;
   exact?: boolean;
   redirect?: string;
   component?: FC<{}>;
-  children?: PrivateRoute[];
+  children?: MeRoute[];
 }
 
-export const ROUTES: PrivateRoute[] = [];
+export const ROUTES: MeRoute[] = [];

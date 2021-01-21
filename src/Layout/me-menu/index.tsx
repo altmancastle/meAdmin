@@ -1,78 +1,46 @@
-import React, { useContext } from "react";
-import { Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
-import MenuIcon from "./icon";
-import { PermissinContext } from "../../App";
+import React from "react";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import PeopleIcon from "@material-ui/icons/People";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import LayersIcon from "@material-ui/icons/Layers";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 
-const { SubMenu } = Menu;
-
-const MeMenu = () => {
-  const { initMenu } = useContext(PermissinContext);
-
-  const { pathname } = useLocation();
-
-  const [, defaultOpenKey, defaultSelectedKey, lastKey] = pathname.split("/");
-
-  const openKey: string[] = [defaultOpenKey];
-  let selectedKey: string[] = [defaultSelectedKey];
-
-  if (lastKey) {
-    openKey.push(defaultSelectedKey);
-    selectedKey = [lastKey];
-  }
-
-  return (
-    <Menu
-      theme="dark"
-      defaultSelectedKeys={[`${defaultSelectedKey}`]}
-      defaultOpenKeys={openKey}
-      selectedKeys={selectedKey}
-      mode="inline"
-    >
-      {initMenu.map((item) => {
-        return (
-          <SubMenu
-            key={item.key}
-            title={
-              <span>
-                <MenuIcon title={item.key} />
-                <span>{item.title}</span>
-              </span>
-            }
-          >
-            {item.children &&
-              item.children.length > 0 &&
-              item.children.map((subItem) => {
-                if (subItem.isExpend) {
-                  return (
-                    <SubMenu
-                      key={subItem.key}
-                      title={<span>{subItem.title}</span>}
-                    >
-                      {subItem.children &&
-                        subItem.children.length > 0 &&
-                        subItem.children.map((subLastItem) => (
-                          <Menu.Item key={subLastItem.key}>
-                            <Link to={subLastItem.link}>
-                              {subLastItem.title}
-                            </Link>
-                          </Menu.Item>
-                        ))}
-                    </SubMenu>
-                  );
-                } else {
-                  return (
-                    <Menu.Item key={subItem.key}>
-                      <Link to={subItem.link}>{subItem.title}</Link>
-                    </Menu.Item>
-                  );
-                }
-              })}
-          </SubMenu>
-        );
-      })}
-    </Menu>
-  );
-};
-
-export default MeMenu;
+export const mainListItems = (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Orders" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Customers" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <BarChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reports" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Integrations" />
+    </ListItem>
+  </div>
+);
